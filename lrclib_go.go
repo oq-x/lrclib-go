@@ -30,6 +30,20 @@ type SyncedLyric struct {
 	Index int
 }
 
+func FormatSyncedLyrics(lyrics []SyncedLyrics) string {
+	var str string
+	for i, lyric := range syncedLyrics {
+		newline := ""
+		if i != len(syncedLyrics)-1 {
+			newline = "\n"
+		}
+		minutes := int(lyric.At.Minutes())
+		seconds := lyric.At.Seconds()
+		str += fmt.Sprintf("[%d:%02.2f] %s", minutes, seconds, lyric.Lyric) + newline
+	}
+	return str
+}
+
 func ParseSyncedLyrics(str string) []SyncedLyric {
 	lines := strings.Split(str, "\n")
 	syncedLyrics := make([]SyncedLyric, len(lines))
